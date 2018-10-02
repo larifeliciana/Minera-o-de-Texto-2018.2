@@ -1,5 +1,7 @@
 import nltk
+from L2 import tag
 import matplotlib.pyplot as plt
+import spacy
 
 ########################################################################################
 #8
@@ -9,15 +11,16 @@ def pipeline(stream):
     stemmer = nltk.stem.SnowballStemmer("english")
     stems = [stemmer.stem(x) for x in tokens]
     lemma = nltk.stem.WordNetLemmatizer()
-    lemmas = [lemma.lemmatize(x) for x in tokens]
     tags = nltk.pos_tag(tokens)
+    lemmas = [lemma.lemmatize(x, tag(tags[tokens.index(x)])) for x in tokens]
+
     return tokens, sentences, stems, lemmas, tags
 
 stream = open('texto_en.txt', 'r').read()
 tokens, sentences, stems, lemmas, tags = pipeline(stream)
 palavras = [x for x in tokens if x.isalpha()]
 stemmes = [y for y in stems if y.isalpha()]
-
+print(lemmas)
 ########################################################################################
 #A
 """print("A)"+str(len(palavras)))
