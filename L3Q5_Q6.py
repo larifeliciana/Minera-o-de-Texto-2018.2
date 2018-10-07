@@ -25,11 +25,30 @@ def vocabulario(tokens, ngram):
 
 
 
-def probabilidade(dicionario):
-    N = sum([i for i in dicionario.values()])
+def probabilidade(dicionario, ngram, unigramas):
+    if ngram is 1:
+        N = sum([i for i in dicionario.values()])
+    else:
+        uni = {}
+        for x in unigramas.keys():
+
+            lista = []
+            for i in dicionario.keys():
+                if i[0] is x:
+                 lista.append(dicionario[i])
+            uni.update({x:sum(lista)})
+
+
     prob = {}
+    lista =[]
+
+
     for i in dicionario:
+        if ngram is 2:
+            N = uni[i[0]]
+
         prob.update({i: (dicionario[i]) /(N)})
+
     return prob
 
 def frase_probabilidade(dicionario, frase, ngram):
@@ -60,13 +79,20 @@ lower = [i.lower() for i in noticias]
 tokens = [nltk.word_tokenize(i) for i in lower]
 
 #####D
-dicionario = vocabulario(tokens, 1)
-prob = probabilidade(dicionario)
+dicionario = vocabulario(tokens, 2)
+prob = probabilidade(dicionario,2, vocabulario(tokens,1))
 
 
 
 #####E
-x = (frase_probabilidade(prob, "asudahsd asuidahsi asiduahsuid aiushdaiusd asuhaus aushuas",1))
-print(x)
-y = frase_probabilidade(prob, 'Uma boa notícia sobre algo.',1)
-print(y)
+def calcular(frase,ngram, tokens):
+
+    dicionario = vocabulario(tokens, ngram)
+    prob = probabilidade(dicionario, ngram, vocabulario(tokens, 1))
+    return frase_probabilidade(prob, frase, ngram)
+
+
+frase = "asudahsd asuidahsi"
+frase2 = ', o'
+print(calcular(frase, 2, tokens))
+print(calcular(frase2, 2, tokens))
