@@ -92,7 +92,6 @@ def calcular(frase,ngram, tokens):
     return frase_probabilidade(prob, frase, ngram)
 
 
-frase = "asudahsd asuidahsi"
-frase2 = ', o'
-print(calcular(frase, 2, tokens))
-print(calcular(frase2, 2, tokens))
+frase = "eu li uma má notícia ontem"
+print(calcular(frase, 1, tokens))
+
