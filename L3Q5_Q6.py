@@ -92,6 +92,6 @@ def calcular(frase,ngram, tokens):
     return frase_probabilidade(prob, frase, ngram)
 
 
-frase = "eu li uma má notícia ontem"
-print(calcular(frase, 1, tokens))
+#frase = "eu li uma má notícia ontem"
+#print(calcular(frase, 1, tokens))
 
