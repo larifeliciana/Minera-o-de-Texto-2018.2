@@ -1,21 +1,8 @@
 from gensim.models import Word2Vec
+from gensim import models
+from gensim.test.utils import common_texts
+from sklearn.cluster import KMeans
 import numpy
-
-words = ['banana', 'potato', 'pear', 'pineapple', 'apple', 'turtle', 'peacock', 'dog', 'cat', 'duck', 'swan', 'elephant', 'pig', 'lion', 'penguin', 'cup', 'bowl', 'kettle', 'spoon', 'car', 'truck', 'ship', 'helicopter', 'boat', 'pen', 'pencil', 'knife', 'scissors', 'screwdriver']
-
-model = Word2Vec([words], size=32, min_count=1)
-
-print(model.similarity("banana", "potato"))
-
-similarities = [[] for i in words]
-print(len(similarities))
-for i in range(len(words)):
-    for j in range(len(words)):
-        similarities[i].append(model.similarity(words[i], words[j]))
-
-for sim in similarities:
-    print(sim)
-
 
 def get_similarities(word):
     result = ""
@@ -26,14 +13,18 @@ def get_similarities(word):
     return result
 
 
-print(get_similarities(words[10]))
+words = ['banana', 'potato', 'pear', 'pineapple', 'apple', 'turtle', 'peacock', 'dog', 'cat', 'duck', 'swan', 'elephant', 'pig', 'lion', 'penguin', 'cup', 'bowl', 'kettle', 'spoon', 'car', 'truck', 'ship', 'helicopter', 'boat', 'pen', 'pencil', 'knife', 'scissors', 'screwdriver']
+model = Word2Vec([words],  min_count=1)
 
-for x in similarities:
-    line = ""
-    for y in x:
-        line = line + str(y) + "\t"
-    print(line)
+X = model[model.wv.vocab]
+def kmeans(n):
+    kmeans = KMeans(n_clusters=n)
+    kmeans.fit(X)
+    print(kmeans.labels_)
 
-# print(model.)
+kmeans(2)
+kmeans(3)
+kmeans(4)
+kmeans(5)
+#print(kmeans.cluster_centers_)
 
-# cosine_similarity = numpy.dot(model['spain'], model['france'])/(numpy.linalg.norm(model['spain'])* numpy.linalg.norm(model['france']))
